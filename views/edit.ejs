@@ -1,0 +1,14 @@
+<body>
+    <!-- update the header -->
+    <h1>Edit <%= item.name %></h1>
+    <form action="/fruits/<%=fruit._id%>?_method=PUT" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" name="name" value="<%= item.name %>" />
+      <input type="checkbox" name="isReadyToBuy" <% if (item.isReadyToBuy) { %>checked<% } %> >
+      <input type="checkbox" name="isReadyToBuy" id="isReadyToBuy" />
+      <!-- update the button text -->
+      <button type="submit">Update Item</button>
+    </form>
+    <a href="/groceries">Back to Groceries</a>
+  </body>
+  
