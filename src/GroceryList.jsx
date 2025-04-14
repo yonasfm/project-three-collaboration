@@ -5,7 +5,6 @@ const GroceryList = () => {
   const [groceries, setGroceries] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/groceries")
       .then(res => setGroceries(res.data))
       .catch(err => console.error("Error fetching groceries:", err));
   }, []);
