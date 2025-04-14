@@ -30,7 +30,7 @@ const NewTrending = () => {
               🕒 Saturday – Sunday: 9:00 AM – 6:00 PM<br /><br />
               Socials:<br />
               Facebook: facebook.com/harvestrootmarket<br />
-              Instagram: instagram.com/harvestrootmarket<br />
+              Instagram: instagram.com/harvestroot.market<br />
               TikTok: tiktok.com/@harvestrootmarket
             </p>
           </li>
