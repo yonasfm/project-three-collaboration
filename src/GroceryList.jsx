@@ -5,7 +5,7 @@ const GroceryList = () => {
   const [groceries, setGroceries] = useState([]);
 
   useEffect(() => {
-      .then(res => setGroceries(res.data))
+      then(res => setGroceries(res.data))
       .catch(err => console.error("Error fetching groceries:", err));
   }, []);
 
