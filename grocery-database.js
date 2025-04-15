@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const groceryChoice = i require('./models/grocery-items.js')
+const groceryChoice = require('./models/grocery-items.js')
 dotenv.config()
 
 
