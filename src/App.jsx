@@ -21,7 +21,6 @@ const App = () => {
 
       {activeSection === 'home' && (
         <section className="home-section">
-          <h2>Groceries App</h2>
           <Home />
         </section>
       )}
