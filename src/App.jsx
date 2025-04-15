@@ -55,7 +55,6 @@ const App = () => {
 
       {activeSection === 'howWeStarted' && (
         <section className="how-we-started-section">
-          <h2>How We Started</h2>
           <HowWeStarted />
         </section>
       )}
