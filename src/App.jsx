@@ -48,7 +48,7 @@ const App = () => {
 
       {activeSection === 'edit' && (
         <section className="easter-section">
-          <h2>Edit Groucrees</h2>
+          <h2>Edit Groceries</h2>
           <Edit />
         </section>
       )}
