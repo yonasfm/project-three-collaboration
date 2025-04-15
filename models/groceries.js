@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
+// models/grocery-items.js
+import mongoose from "mongoose";
 
-const grocerySchema = new mongoose.Schema({
-  name: String,
-  quantity: Number,
+const groceryItemSchema = new mongoose.Schema({
+  groceryItem: String,
+  groceryType: String,
 });
 
-const Grocery = mongoose.model('Grocery', grocerySchema);
+const GroceryItem = mongoose.model("GroceryItem", groceryItemSchema);
 
-module.exports = Grocery;
+export default GroceryItem;
