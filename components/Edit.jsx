@@ -4,10 +4,11 @@ const Edit = () => {
   return (
     <>
       <div>
+        <h1>Edit Groceries</h1>
         <img
           src="https://media.gettyimages.com/id/872903742/vector/antique-photograph-of-london-the-new-cut.jpg?s=612x612&w=gi&k=20&c=g8XVwSOss3IwDPuKXaFUH3oAaFaoAGODP3LvKOGN1ns="
           alt="History of the Organization"
-          style={{ width: "100%", height: "auto", marginBottom: "20px", borderRadius: "12px" }}
+          style={{ width: "20%", height: "auto", marginBottom: "20px", borderRadius: "12px" }}
         />
         <p>
           History:{" "}
