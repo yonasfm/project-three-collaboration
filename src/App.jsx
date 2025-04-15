@@ -1,12 +1,12 @@
 // src/App.jsx
 import { useState } from 'react'; // ✅ don't forget this!
 import ContactUs from '../components/ContactUs';
-import Easter from '../components/Easter';
+import Edit from '../components/Edit';
 import GroceryList from '../components/GroceryList';
+import Home from '../components/Home';
 import HowWeStarted from '../components/HowWeStarted';
-import Navbar from '../components/navbar/navbar'; // ✅ if you have this
-import NewTrending from '../components/NewTrending';
-import Sale from '../components/Sale';
+import Navbar from '../components/navbar/navbar';
+import New from '../components/New';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -21,11 +21,8 @@ const App = () => {
 
       {activeSection === 'home' && (
         <section className="home-section">
-          <h3>Welcome to FreshMart Groceries</h3>
-          <p>
-            Your friendly neighborhood grocery store with the freshest produce, trending deals,
-            seasonal highlights, and everything your kitchen needs. Explore what’s new!
-          </p>
+          <h2>Groceries App</h2>
+          <Home />
         </section>
       )}
 
@@ -36,10 +33,10 @@ const App = () => {
         </section>
       )}
 
-      {activeSection === 'sale' && (
-        <section className="sale-section">
-          <h2>Current Sale</h2>
-          <Sale />
+      {activeSection === 'New' && (
+        <section className="new-section">
+          <h2>Current for sale</h2>
+          <New />
         </section>
       )}
 
@@ -50,10 +47,10 @@ const App = () => {
         </section>
       )}
 
-      {activeSection === 'easter' && (
+      {activeSection === 'edit' && (
         <section className="easter-section">
-          <h2>Special Easter Picks</h2>
-          <Easter />
+          <h2>Edit Groucrees</h2>
+          <Edit />
         </section>
       )}
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const howWeStarted = () => {
+const Home = () => {
   return (
     <>
       <div>
@@ -16,7 +16,7 @@ const howWeStarted = () => {
             Over the years, it has grown into a beloved neighborhood market with over 100
             locations nationwide. Grouthrees is known for its curated selection of organic
             produce, artisanal goods, and household essentials, all while supporting local
-            farmers and producers. With a customer-first philosophy, we continue to create
+            farmers and producers. With---- a customer-first philosophy, we continue to create
             welcoming spaces where people can shop with confidence, enjoy healthy living,
             and connect with their communities.
           </span>
@@ -26,4 +26,4 @@ const howWeStarted = () => {
   );
 };
 
-export default howWeStarted;
+export default Home;
