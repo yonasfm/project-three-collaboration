@@ -1,92 +1,68 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const methodOverride = require("method-override"); 
-const morgan = require("morgan"); 
-
-const app = express();
-
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.connection.on("connected", () => {
-  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
-});
-
+const express = require("express");
+const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const morgan = require("morgan");
+const cors = require("cors"); 
 const Grocery = require("./models/groceries.js");
 
+const app = express(); // 
+
+// Middleware
+app.use(cors()); // ✅ now works
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(methodOverride("_method"));
+app.use(morgan("dev"));
 
-// DB connection code
-
-// Mount it along with our other middleware, ABOVE the routes
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride("_method")); // new
-app.use(morgan("dev")); //new
-
-app.listen(3000, () => {
-  console.log("Listening on port 3000");
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on("connected", () => {
+  console.log(`Connected to MongoDB: ${mongoose.connection.name}`);
 });
 
-// routes below
+// EJS setup
+app.set("view engine", "ejs");
 
+// ROUTES
 
-// GET /groceries/new
+// Render the form to create a new grocery
 app.get("/groceries/new", (req, res) => {
   res.render("groceries/new.ejs");
 });
 
-// POST /groceries
+// Create a new grocery item
 app.post("/groceries", async (req, res) => {
-  if (req.body.isReadyToBuy === "on") {
-    req.body.isReadyToBuy = true;
-  } else {
-    req.body.isReadyToBuy = false;
-  }
+  req.body.isReadyToBuy = req.body.isReadyToBuy === "on";
   await Grocery.create(req.body);
-  res.redirect("/groceries/new");
+  res.redirect("/groceries");
 });
 
-// POST /groceries/update
-app.post("/groceries", async (req, res) => {
-  if (req.body.isReadyToBuy === "on") {
-    req.body.isReadyToBuy = true;
-  } else {
-    req.body.isReadyToBuy = false;
-  }
-  await Grocery.create(req.body);
-  res.redirect("/groceries"); // redirect to index fruits
-});
-
+// Show one grocery item
 app.get("/groceries/:itemId", async (req, res) => {
-  const foundItem = await Grocery.findById(req.params.itemIdId);
+  const foundItem = await Grocery.findById(req.params.itemId);
   res.render("groceries/show.ejs", { Grocery: foundItem });
 });
 
+// Delete a grocery item
 app.delete("/groceries/:itemId", async (req, res) => {
   await Grocery.findByIdAndDelete(req.params.itemId);
   res.redirect("/groceries");
 });
 
-// GET localhost:3000/groceries/:itemId/edit
+// Edit form
 app.get("/groceries/:itemId/edit", async (req, res) => {
-  const foundItem = await Grocery.findById(req.params.fruitId);
-  console.log(foundItem);
-  res.render("groceries/edit.ejs", {
-    Grocery: foundItem,
-  });
+  const foundItem = await Grocery.findById(req.params.itemId);
+  res.render("groceries/edit.ejs", { Grocery: foundItem });
 });
 
-
+// Update item
 app.put("/groceries/:itemId", async (req, res) => {
-  // Handle the 'isReadyToBuy' checkbox data
-  if (req.body.isReadyToBuy === "on") {
-    req.body.isReadyToBuy = true;
-  } else {
-    req.body.isReadyToBuy = false;
-  }
-  
+  req.body.isReadyToBuy = req.body.isReadyToBuy === "on";
   await Grocery.findByIdAndUpdate(req.params.itemId, req.body);
-
   res.redirect(`/groceries/${req.params.itemId}`);
 });
 
-
-
+// Server listening
+app.listen(3000, () => {
+  console.log("Listening on port 3000");
+});
