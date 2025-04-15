@@ -10,10 +10,9 @@ const Navbar = ({ onNavigate }) => {
   return (
     <nav id="top-navbar">
       <a href="#" onClick={(event) => handleClick(event, 'home')}>Home</a>
+      <a href="#" onClick={(event) => handleClick(event, 'edit')}>Edit</a>
+      <a href="#" onClick={(event) => handleClick(event, 'New')}>New</a>
       <a href="#" onClick={(event) => handleClick(event, 'groceryList')}>Grocery List</a>
-      <a href="#" onClick={(event) => handleClick(event, 'sale')}>Sale</a>
-      <a href="#" onClick={(event) => handleClick(event, 'newTrending')}>New & Trending</a>
-      <a href="#" onClick={(event) => handleClick(event, 'easter')}>Easter</a>
       <a href="#" onClick={(event) => handleClick(event, 'howWeStarted')}>How We Started</a>
       <a href="#" onClick={(event) => handleClick(event, 'contactUs')}>Contact Us</a>
     </nav>
