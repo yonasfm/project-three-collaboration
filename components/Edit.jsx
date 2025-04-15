@@ -1,30 +1,47 @@
-import React from "react";
+import React, { useState } from 'react';
 
-const Edit = () => {
+function Edit({ item, onSubmit }) {
+  // Show loading state if item is undefined
+  if (!item) {
+    return <div>Loading...</div>;
+  }
+
+  const [name, setName] = useState(item.name);
+  const [isReadyToBuy, setIsReadyToBuy] = useState(item.isReadyToBuy);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ ...item, name, isReadyToBuy });
+  };
+
   return (
-    <>
-      <div>
-        <img
-          src="https://media.gettyimages.com/id/872903742/vector/antique-photograph-of-london-the-new-cut.jpg?s=612x612&w=gi&k=20&c=g8XVwSOss3IwDPuKXaFUH3oAaFaoAGODP3LvKOGN1ns="
-          alt="History of the Organization"
-          style={{ width: "20%", height: "auto", marginBottom: "20px", borderRadius: "12px" }}
+    <div>
+      <h1>Edit {item.name}</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        <p>
-          History:{" "}
-          <span>
-            Founded in 2015, Grouthrees Market began as a small community grocery store
-            with a vision to provide fresh, locally sourced, and sustainable food options.
-            Over the years, it has grown into a beloved neighborhood market with over 100
-            locations nationwide. Grouthrees is known for its curated selection of organic
-            produce, artisanal goods, and household essentials, all while supporting local
-            farmers and producers. With a customer-first philosophy, we continue to create
-            welcoming spaces where people can shop with confidence, enjoy healthy living,
-            and connect with their communities.
-          </span>
-        </p>
-      </div>
-    </>
+
+        <label htmlFor="isReadyToBuy">Ready to Buy:</label>
+        <input
+          type="checkbox"
+          id="isReadyToBuy"
+          name="isReadyToBuy"
+          checked={isReadyToBuy}
+          onChange={(e) => setIsReadyToBuy(e.target.checked)}
+        />
+
+        <button type="submit">Update Item</button>
+      </form>
+
+      <a href="/groceries">Back to Groceries</a>
+    </div>
   );
-};
+}
 
 export default Edit;
