@@ -1,13 +1,28 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const GroceryList = () => {
   const [groceries, setGroceries] = useState([]);
+  const [error, setError] = useState(null); // new
 
   useEffect(() => {
-      .then(res => setGroceries(res.data))
-      .catch(err => console.error("Error fetching groceries:", err));
+    axios.get("http://localhost:3001/groceries")
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setGroceries(res.data);
+        } else {
+          setError("Invalid data format from server.");
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching groceries:", err);
+        setError("Could not fetch groceries. Please try again.");
+      });
   }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
