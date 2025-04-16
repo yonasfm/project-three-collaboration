@@ -1,46 +1,44 @@
-import axios from "axios";
-import React, { useState } from "react";
+// src/components/New.jsx
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const New = ({ onNewItem }) => {
-  const [name, setName] = useState("");
+const New = () => {
+  const [groceryItem, setGroceryItem] = useState('');
   const [isReadyToBuy, setIsReadyToBuy] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/groceries", {
-        name,
-        isReadyToBuy,
-      });
-      if (onNewItem) onNewItem(response.data); // pass new item back
-      setName("");
-      setIsReadyToBuy(false);
-    } catch (err) {
-      console.error("Error adding grocery:", err);
-    }
+
+    await fetch('http://localhost:3000/api/groceries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ groceryItem, isReadyToBuy }),
+    });
+
+    navigate('/groceries');
   };
 
   return (
     <div>
-      <h2>Create a New Grocery Item</h2>
+      <h2>Add New Grocery</h2>
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={groceryItem}
+          onChange={(e) => setGroceryItem(e.target.value)}
+          placeholder="Enter item name"
+          required
+        />
         <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>
-          Ready to Buy?
           <input
             type="checkbox"
             checked={isReadyToBuy}
             onChange={(e) => setIsReadyToBuy(e.target.checked)}
           />
+          Ready to Buy?
         </label>
-        <button type="submit">Add Item</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );

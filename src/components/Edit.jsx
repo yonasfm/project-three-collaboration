@@ -1,47 +1,57 @@
-import React, { useState } from 'react';
+// src/components/Edit.jsx
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function Edit({ item, onSubmit }) {
-  // Show loading state if item is undefined
-  if (!item) {
-    return <div>Loading...</div>;
-  }
+const Edit = () => {
+  const { id } = useParams();
+  const [groceryItem, setGroceryItem] = useState('');
+  const [isReadyToBuy, setIsReadyToBuy] = useState(false);
+  const navigate = useNavigate();
 
-  const [name, setName] = useState(item.name);
-  const [isReadyToBuy, setIsReadyToBuy] = useState(item.isReadyToBuy);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/groceries/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        setGroceryItem(data.groceryItem);
+        setIsReadyToBuy(data.isReadyToBuy);
+      })
+      .catch(err => console.error('Failed to load item:', err));
+  }, [id]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ ...item, name, isReadyToBuy });
+
+    await fetch(`http://localhost:3000/api/groceries/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ groceryItem, isReadyToBuy }),
+    });
+
+    navigate('/groceries');
   };
 
   return (
     <div>
-      <h1>Edit {item.name}</h1>
+      <h2>Edit Grocery</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={groceryItem}
+          onChange={(e) => setGroceryItem(e.target.value)}
+          required
         />
-
-        <label htmlFor="isReadyToBuy">Ready to Buy:</label>
-        <input
-          type="checkbox"
-          id="isReadyToBuy"
-          name="isReadyToBuy"
-          checked={isReadyToBuy}
-          onChange={(e) => setIsReadyToBuy(e.target.checked)}
-        />
-
-        <button type="submit">Update Item</button>
+        <label>
+          <input
+            type="checkbox"
+            checked={isReadyToBuy}
+            onChange={(e) => setIsReadyToBuy(e.target.checked)}
+          />
+          Ready to Buy?
+        </label>
+        <button type="submit">Update</button>
       </form>
-
-      <a href="/groceries">Back to Groceries</a>
     </div>
   );
-}
+};
 
 export default Edit;

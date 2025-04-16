@@ -1,84 +1,91 @@
-require("dotenv").config(); // Load environment variables
+import express from 'express';
+import mongoose from 'mongoose';
+import methodOverride from 'method-override';
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import GroceryItem from './models/groceries.js';
 
-const express = require("express");
-const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-const morgan = require("morgan");
-const cors = require("cors");
-const Grocery = require("./models/groceries.js");
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 4000;
 
 // Middleware
-app.use(cors()); // Allow frontend access
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(methodOverride("_method"));
-app.use(morgan("dev"));
+app.use(cors());  // Allow requests from React frontend
+app.use(express.json());  // Parse JSON requests
+app.use(methodOverride('_method'));  // Handle PUT and DELETE requests
+app.use(morgan('dev'));  // Log requests
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.connection.on("connected", () => {
-  console.log(`✅ Connected to MongoDB: ${mongoose.connection.name}`);
-});
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log(`Connected to MongoDB: ${mongoose.connection.name}`))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-// --- API Routes ---
-
-// Get all groceries
-app.get("/groceries", async (req, res) => {
+// API Routes (only JSON responses for frontend)
+app.get('/api/groceries', async (req, res) => {
   try {
-    const groceries = await Grocery.find();
-    res.json(groceries);
+    const groceries = await GroceryItem.find();  // Fetch all grocery items from DB
+    res.json(groceries);  // Send the data as JSON
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error fetching groceries:', err);
+    res.status(500).json({ error: 'Failed to load groceries.' });
   }
 });
 
-// Get a single grocery item
-app.get("/groceries/:itemId", async (req, res) => {
+app.get('/api/groceries/:id', async (req, res) => {
   try {
-    const item = await Grocery.findById(req.params.itemId);
-    res.json(item);
+    const groceryItem = await GroceryItem.findById(req.params.id);
+    if (!groceryItem) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json(groceryItem);  // Send the grocery item as JSON
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Failed to load grocery item.' });
   }
 });
 
-// Create a new grocery item
-app.post("/groceries", async (req, res) => {
+app.post('/api/groceries', async (req, res) => {
   try {
-    const newItem = await Grocery.create(req.body);
-    res.status(201).json(newItem);
+    const { groceryItem, groceryType } = req.body;
+    const newGrocery = new GroceryItem({ groceryItem, groceryType });
+    await newGrocery.save();
+    res.status(201).json(newGrocery);  // Respond with the created grocery item
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: 'Failed to create grocery item.' });
   }
 });
 
-// Update a grocery item
-app.put("/groceries/:itemId", async (req, res) => {
+app.put('/api/groceries/:id', async (req, res) => {
   try {
-    const updatedItem = await Grocery.findByIdAndUpdate(
-      req.params.itemId,
-      req.body,
+    const { groceryItem, groceryType } = req.body;
+    const updatedGrocery = await GroceryItem.findByIdAndUpdate(
+      req.params.id,
+      { groceryItem, groceryType },
       { new: true }
     );
-    res.json(updatedItem);
+    if (!updatedGrocery) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json(updatedGrocery);  // Respond with the updated grocery item
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: 'Failed to update grocery item.' });
   }
 });
 
-// Delete a grocery item
-app.delete("/groceries/:itemId", async (req, res) => {
+app.delete('/api/groceries/:id', async (req, res) => {
   try {
-    await Grocery.findByIdAndDelete(req.params.itemId);
-    res.json({ message: "Deleted successfully" });
+    const deletedGrocery = await GroceryItem.findByIdAndDelete(req.params.id);
+    if (!deletedGrocery) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json({ message: 'Grocery item deleted successfully' });  // Respond with success message
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Failed to delete grocery item.' });
   }
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log("🚀 Server listening on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
