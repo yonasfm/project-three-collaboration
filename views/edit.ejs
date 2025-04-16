@@ -1,14 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Grocery</title>
+</head>
 <body>
-    <!-- update the header -->
-    <h1>Edit <%= item.name %></h1>
-    <form action="/fruits/<%=fruit._id%>?_method=PUT" method="POST">
-      <label for="name">Name:</label>
-      <input type="text" name="name" value="<%= item.name %>" />
-      <input type="checkbox" name="isReadyToBuy" <% if (item.isReadyToBuy) { %>checked<% } %> >
-      <input type="checkbox" name="isReadyToBuy" id="isReadyToBuy" />
-      <!-- update the button text -->
-      <button type="submit">Update Item</button>
-    </form>
-    <a href="/groceries">Back to Groceries</a>
-  </body>
-  
+
+  <h1>Edit <%= item.name %></h1>
+
+  <form action="/groceries/<%= item._id %>?_method=PUT" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="<%= item.name %>" />
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" value="<%= item.quantity %>" />
+
+    <label for="isReadyToBuy">Ready to Buy?</label>
+    <input
+      type="checkbox"
+      name="isReadyToBuy"
+      id="isReadyToBuy"
+      <% if (item.isReadyToBuy) { %> checked <% } %>
+    />
+
+    <button type="submit">Update Grocery</button>
+  </form>
+
+  <a href="/groceries">Back to Groceries</a>
+
+</body>
+</html>
+
+   
+
+
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <h1>Edit <%= aquaphor.name %></h1>
+    <form action="/aquaphors/<%= aquaphor._id %>?_method=PUT" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" value="<%= aquaphor.name %>" />
+      
+        <label for="isReadyToUse">Ready to Use?</label>
+        <input type="checkbox" name="isReadyToUse" <% if (aquaphor.isReadyToUse) { %>checked<% } %> >
+      
+        <button type="submit">Update Aquaphor</button>
+      </form>
+    <a href="/aquaphors">Back to aquaphors</a>
+  </body>  
+</html>  -->
