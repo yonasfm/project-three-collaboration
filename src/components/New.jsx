@@ -1,4 +1,3 @@
-// src/components/New.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,16 +18,27 @@ const New = () => {
     navigate('/groceries');
   };
 
+  const style = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '23px',
+    fontFamily: '"Playfair, display"',
+    fontWeight: '400',
+    gap: '20px',
+  };
+
   return (
     <div>
-      <h2>Add New Grocery</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 style={style}>Add New Grocery</h2>
+      <form onSubmit={handleSubmit} style={style}>
         <input
           type="text"
           value={groceryItem}
           onChange={(e) => setGroceryItem(e.target.value)}
           placeholder="Enter item name"
           required
+          style={style}
         />
         <button type="submit">Add</button>
       </form>

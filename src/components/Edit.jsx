@@ -34,24 +34,60 @@ const Edit = () => {
     navigate('/groceries');
   };
 
+  const style = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '23px',
+    fontFamily: '"Playfair, display"',
+    fontWeight: '400',
+    gap: '20px',
+  };
+
+  const deleteButtonStyle = {
+    marginTop: '20px',
+    backgroundColor: 'red',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  };
+
+  const inputStyle = {
+    ...style,
+    padding: '10px',
+    fontSize: '20px',
+  };
+
+  const buttonStyle = {
+    padding: '10px 20px',
+    fontSize: '18px',
+    borderRadius: '5px',
+    border: 'none',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    cursor: 'pointer',
+  };
+
   return (
     <div>
-      <h2>Edit Grocery</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 style={style}>Edit Grocery</h2>
+      <form onSubmit={handleSubmit} style={style}>
         <input
           type="text"
           value={groceryItem}
           onChange={(e) => setGroceryItem(e.target.value)}
           required
+          style={inputStyle}
         />
-        <button type="submit">Update</button>
+        <button type="submit" style={buttonStyle}>Update</button>
       </form>
-      <button
-        onClick={handleDelete}
-        style={{ marginTop: '10px', backgroundColor: 'red', color: 'white' }}
-      >
-        Delete Item
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button onClick={handleDelete} style={deleteButtonStyle}>
+          Delete Item
+        </button>
+      </div>
     </div>
   );
 };
