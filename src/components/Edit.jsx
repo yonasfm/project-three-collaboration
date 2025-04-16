@@ -7,7 +7,7 @@ const Edit = () => {
   const [isReadyToBuy, setIsReadyToBuy] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch(`http://localhost:3000/api/groceries/${id}`)
+    fetch(`http://localhost:4000/api/groceries/${id}`)
       .then(res => res.json())
       .then(data => {
         setGroceryItem(data.groceryItem);
@@ -17,7 +17,7 @@ const Edit = () => {
   }, [id]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`http://localhost:3000/api/groceries/${id}`, {
+    await fetch(`http://localhost:4000/api/groceries/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ groceryItem, isReadyToBuy }),
