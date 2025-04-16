@@ -1,12 +1,12 @@
 // src/App.jsx
 import { useState } from 'react'; // ✅ don't forget this!
-import ContactUs from '../components/ContactUs';
-import Edit from '../components/Edit';
-import GroceryList from '../components/GroceryList';
-import Home from '../components/Home';
-import HowWeStarted from '../components/HowWeStarted';
-import Navbar from '../components/navbar/navbar';
-import New from '../components/New';
+import ContactUs from './components/ContactUs';
+import Edit from './components/Edit';
+import GroceryList from './components/GroceryList';
+import Home from './components/Home';
+import HowWeStarted from './components/HowWeStarted';
+import Navbar from './components/navbar/navbar';
+import New from './components/New';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
