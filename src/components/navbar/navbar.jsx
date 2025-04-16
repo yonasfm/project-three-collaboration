@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "./logo.png";
 import './navbar.css';
 
 const Navbar = ({ onNavigate }) => {
@@ -9,6 +10,14 @@ const Navbar = ({ onNavigate }) => {
 
   return (
     <nav id="top-navbar">
+      <img
+        src={Logo}
+        alt="Logo"
+        style={{
+          height: '50px',
+          marginRight: '20px'
+        }}
+      />
       <a href="#" onClick={(event) => handleClick(event, 'home')}>Home</a>
       <a href="#" onClick={(event) => handleClick(event, 'edit')}>Edit</a>
       <a href="#" onClick={(event) => handleClick(event, 'New')}>New</a>

@@ -1,0 +1,11 @@
+#top-navbar {
+display: flex;
+  justify-content: center; /* horizontal */
+  align-items: center;
+    gap: 100px;
+    background: green;
+    font-size: 30px;
+    height: 97px;
+ font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+}

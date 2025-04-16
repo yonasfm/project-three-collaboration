@@ -1,9 +1,0 @@
-#top-navbar {
-display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;
-  gap: 40px;
-  background: green;
-  font-size: 30px;
-  height: 50px;
-}

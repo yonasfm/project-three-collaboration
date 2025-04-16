@@ -2,10 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
-const cors = require("cors"); 
+const cors = require("cors");
 const Grocery = require("./models/groceries.js");
 
-const app = express(); // 
+const app = express(); //
 
 // Middleware
 app.use(cors()); // ✅ now works
