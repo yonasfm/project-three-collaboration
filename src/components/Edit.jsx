@@ -1,40 +1,50 @@
-// Edit.jsx
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-
+// src/components/Edit.jsx
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 const Edit = () => {
-  const { id } = useParams(); // get the item id from the URL
+  const { id } = useParams();
+  const [groceryItem, setGroceryItem] = useState('');
+  const [isReadyToBuy, setIsReadyToBuy] = useState(false);
   const navigate = useNavigate();
-
-  const [item, setItem] = useState(null); // item being edited
-  const [groceries, setGroceries] = useState([]); // list of all items
-
-  // Fetch the single item to edit
   useEffect(() => {
-    axios.get(`/api/groceries/${id}`)
-      .then((res) => setItem(res.data))
-      .catch((err) => console.error("Error fetching single item:", err));
+    fetch(`http://localhost:3000/api/groceries/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        setGroceryItem(data.groceryItem);
+        setIsReadyToBuy(data.isReadyToBuy);
+      })
+      .catch(err => console.error('Failed to load item:', err));
   }, [id]);
-
-  // Fetch the entire list of groceries
-  useEffect(() => {
-    axios.get("/api/groceries")
-      .then((res) => setGroceries(res.data))
-      .catch((err) => console.error("Error fetching groceries:", err));
-  }, []);
-
-  const handleChange = (e) => {
-    setItem({ ...item, [e.target.name]: e.target.value });
-  };
-
-  const handleCheckbox = (e) => {
-    setItem({ ...item, isReadyToBuy: e.target.checked });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.put(`/api/groceries/${id}`, item)
-      .then(() => navigate("/groceries"))
-      .catch((err) => console.error("Error updating item:", err));
-  }};
+    await fetch(`http://localhost:3000/api/groceries/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ groceryItem, isReadyToBuy }),
+    });
+    navigate('/groceries');
+  };
+  return (
+    <div>
+      <h2>Edit Grocery</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={groceryItem}
+          onChange={(e) => setGroceryItem(e.target.value)}
+          required
+        />
+        <label>
+          <input
+            type="checkbox"
+            checked={isReadyToBuy}
+            onChange={(e) => setIsReadyToBuy(e.target.checked)}
+          />
+          Ready to Buy?
+        </label>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  );
+};
+export default Edit;

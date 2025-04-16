@@ -10,7 +10,7 @@ const New = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch('http://localhost:3000/api/groceries', {
+    await fetch('http://localhost:4000/api/groceries', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ groceryItem, isReadyToBuy }),
