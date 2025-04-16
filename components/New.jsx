@@ -1,20 +1,48 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
-const New = () => {
+const New = ({ onNewItem }) => {
+  const [name, setName] = useState("");
+  const [isReadyToBuy, setIsReadyToBuy] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/groceries", {
+        name,
+        isReadyToBuy,
+      });
+      if (onNewItem) onNewItem(response.data); // pass new item back
+      setName("");
+      setIsReadyToBuy(false);
+    } catch (err) {
+      console.error("Error adding grocery:", err);
+    }
+  };
+
   return (
-    <>
-      <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Create a new grocery item!</title>
-      <h1>New item goes here :</h1>
-      <form action="/groceries" method="POST">
-        <label htmlFor="name">Name:</label>
-        <input type="text" name="name" id="name" />
-        <label htmlFor="isReadyToBuy">Ready to Buy?</label>
-        <input type="checkbox" name="isReadyToBuy" id="isReadyToBuy" />
-        <button type="submit">Add Grocery Item?</button>
+    <div>
+      <h2>Create a New Grocery Item</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label>
+          Ready to Buy?
+          <input
+            type="checkbox"
+            checked={isReadyToBuy}
+            onChange={(e) => setIsReadyToBuy(e.target.checked)}
+          />
+        </label>
+        <button type="submit">Add Item</button>
       </form>
-    </>
+    </div>
   );
 };
 
