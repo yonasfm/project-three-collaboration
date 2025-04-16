@@ -142,3 +142,58 @@ const Edit = () => {
 };
 >>>>>>> 0937169a70965b9ac521e0fe941a0003a47584d2
 export default Edit;
+  if (!item) return <div>Loading...</div>;
+
+//   return (
+//     <div>
+//       <h1>Edit Grocery</h1>
+
+//       <form onSubmit={handleSubmit}>
+//         <label>Name:</label>
+//         <input
+//           type="text"
+//           name="name"
+//           value={item.name}
+//           onChange={handleChange}
+//         />
+//         <br /><br />
+
+//         <label>Quantity:</label>
+//         <input
+//           type="number"
+//           name="quantity"
+//           value={item.quantity}
+//           onChange={handleChange}
+//         />
+//         <br /><br />
+
+//         <label>Ready to Buy?</label>
+//         <input
+//           type="checkbox"
+//           name="isReadyToBuy"
+//           checked={item.isReadyToBuy || false}
+//           onChange={handleChange}
+//         />
+//         <br /><br />
+
+//         <button type="submit">Update Grocery</button>
+//       </form>
+
+//       <hr />
+
+//       <h2>All Groceries</h2>
+//       <ul>
+//         {groceries.map((g) => (
+//           <li key={g._id}>
+//             {g.name} - {g.quantity}
+//             <button onClick={() => navigate(`/edit/${g._id}`)}>
+//               Edit
+//             </button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+
+
+// export default Edit;
