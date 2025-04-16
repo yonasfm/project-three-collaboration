@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 function Edit({ item, onSubmit }) {
@@ -44,6 +45,7 @@ function Edit({ item, onSubmit }) {
   );
 }
 
+=======
 // src/components/Edit.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -138,7 +140,9 @@ const Edit = () => {
     </div>
   );
 };
+>>>>>>> 0937169a70965b9ac521e0fe941a0003a47584d2
 export default Edit;
+  if (!item) return <div>Loading...</div>;
 
 //   return (
 //     <div>
