@@ -1,11 +1,12 @@
-// src/components/Edit.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 const Edit = () => {
   const { id } = useParams();
   const [groceryItem, setGroceryItem] = useState('');
   const [isReadyToBuy, setIsReadyToBuy] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`http://localhost:4000/api/groceries/${id}`)
       .then(res => res.json())
@@ -15,6 +16,7 @@ const Edit = () => {
       })
       .catch(err => console.error('Failed to load item:', err));
   }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetch(`http://localhost:4000/api/groceries/${id}`, {
@@ -24,6 +26,14 @@ const Edit = () => {
     });
     navigate('/groceries');
   };
+
+  const handleDelete = async () => {
+    await fetch(`http://localhost:4000/api/groceries/${id}`, {
+      method: 'DELETE',
+    });
+    navigate('/groceries');
+  };
+
   return (
     <div>
       <h2>Edit Grocery</h2>
@@ -36,7 +46,14 @@ const Edit = () => {
         />
         <button type="submit">Update</button>
       </form>
+      <button
+        onClick={handleDelete}
+        style={{ marginTop: '10px', backgroundColor: 'red', color: 'white' }}
+      >
+        Delete Item
+      </button>
     </div>
   );
 };
+
 export default Edit;
