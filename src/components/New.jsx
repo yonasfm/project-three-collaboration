@@ -30,14 +30,6 @@ const New = () => {
           placeholder="Enter item name"
           required
         />
-        <label>
-          <input
-            type="checkbox"
-            checked={isReadyToBuy}
-            onChange={(e) => setIsReadyToBuy(e.target.checked)}
-          />
-          Ready to Buy?
-        </label>
         <button type="submit">Add</button>
       </form>
     </div>

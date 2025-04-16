@@ -34,14 +34,6 @@ const Edit = () => {
           onChange={(e) => setGroceryItem(e.target.value)}
           required
         />
-        <label>
-          <input
-            type="checkbox"
-            checked={isReadyToBuy}
-            onChange={(e) => setIsReadyToBuy(e.target.checked)}
-          />
-          Ready to Buy?
-        </label>
         <button type="submit">Update</button>
       </form>
     </div>
