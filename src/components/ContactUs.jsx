@@ -4,7 +4,9 @@ const ContactUs = () => {
   return (
     <>
       <div>
-        <h4>Harvest & Root Market Co.</h4>
+        <h4 style={{ margin: "30px", fontFamily: "Playfair, display", fontSize: "20px" }}>
+          Harvest & Root Market Co.
+        </h4>
         <ul>
           <li>
             <p>
@@ -16,18 +18,18 @@ const ContactUs = () => {
           <li>
             <p>
               Phone:<br />
-              📞 (541) 555-2834<br /><br />
+              (541) 555-2834<br /><br />
               Email:<br />
-              📧 hello@harvestrootmarket.com<br /><br />
+              hello@harvestrootmarket.com<br /><br />
               Website:
             </p>
           </li>
           <li>
             <p>
-              🌐 www.harvestrootmarket.com<br /><br />
+              www.harvestrootmarket.com<br /><br />
               Business Hours:<br />
-              🕒 Monday – Friday: 8:00 AM – 8:00 PM (PST)<br />
-              🕒 Saturday – Sunday: 9:00 AM – 6:00 PM<br /><br />
+              Monday – Friday: 8:00 AM – 8:00 PM (PST)<br />
+              Saturday – Sunday: 9:00 AM – 6:00 PM<br /><br />
               Socials:<br />
               Facebook: facebook.com/harvestrootmarket<br />
               Instagram: instagram.com/harvestrootmarket<br />
