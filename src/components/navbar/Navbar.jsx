@@ -15,8 +15,7 @@ const Navbar = () => {
           marginRight: '20px'
         }}
       />
-      <Link to="/">Home</Link>
-      <Link to="/groceries/123/edit">Edit</Link> {/* Replace 123 with actual ID */}
+      <Link to="/">Home</Link>{/* Replace 123 with actual ID */}
       <Link to="/groceries/new">New</Link>
       <Link to="/groceries">Grocery List</Link>
       <Link to="/how-we-started">How We Started</Link>
