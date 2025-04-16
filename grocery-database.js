@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import GroceryItem from "./models/grocery-items.js"; // updated import
+import GroceryItem from "./models/groceries.js"; // updated import
 
 dotenv.config();
 
