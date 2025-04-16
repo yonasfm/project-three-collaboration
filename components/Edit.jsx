@@ -1,23 +1,40 @@
-import React from "react";
+// Edit.jsx
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Edit = () => {
-  return (
-    <>
-      <div>
-        <img
-          src="https://media.gettyimages.com/id/872903742/vector/antique-photograph-of-london-the-new-cut.jpg?s=612x612&w=gi&k=20&c=g8XVwSOss3IwDPuKXaFUH3oAaFaoAGODP3LvKOGN1ns="
-          alt="History of the Organization"
-          style={{ width: "20%", height: "auto", marginBottom: "20px", borderRadius: "12px" }}
-        />
-        <p>
-          Edit:{" "}
-          <span>
-            Here you will be able to edit your favorite treats and groceries!
-          </span>
-        </p>
-      </div>
-    </>
-  );
-};
+  const { id } = useParams(); // get the item id from the URL
+  const navigate = useNavigate();
 
-export default Edit;
+  const [item, setItem] = useState(null); // item being edited
+  const [groceries, setGroceries] = useState([]); // list of all items
+
+  // Fetch the single item to edit
+  useEffect(() => {
+    axios.get(`/api/groceries/${id}`)
+      .then((res) => setItem(res.data))
+      .catch((err) => console.error("Error fetching single item:", err));
+  }, [id]);
+
+  // Fetch the entire list of groceries
+  useEffect(() => {
+    axios.get("/api/groceries")
+      .then((res) => setGroceries(res.data))
+      .catch((err) => console.error("Error fetching groceries:", err));
+  }, []);
+
+  const handleChange = (e) => {
+    setItem({ ...item, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckbox = (e) => {
+    setItem({ ...item, isReadyToBuy: e.target.checked });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.put(`/api/groceries/${id}`, item)
+      .then(() => navigate("/groceries"))
+      .catch((err) => console.error("Error updating item:", err));
+  }};
