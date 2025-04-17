@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Edit = () => {
   const { id } = useParams();
   const [groceryItem, setGroceryItem] = useState('');
-  const [isReadyToBuy, setIsReadyToBuy] = useState(false);
+  const [groceryType, setGroceryType] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const Edit = () => {
       .then(res => res.json())
       .then(data => {
         setGroceryItem(data.groceryItem);
-        setIsReadyToBuy(data.isReadyToBuy);
+        setGroceryType(data.groceryType);
       })
       .catch(err => console.error('Failed to load item:', err));
   }, [id]);
@@ -22,7 +22,7 @@ const Edit = () => {
     await fetch(`http://localhost:4000/api/groceries/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ groceryItem, isReadyToBuy }),
+      body: JSON.stringify({ groceryItem, groceryType }), // Updated body
     });
     navigate('/groceries');
   };
@@ -72,24 +72,28 @@ const Edit = () => {
 
   return (
     <div>
-      <h2 style={style}>Edit Grocery</h2>
-      <form onSubmit={handleSubmit} style={style}>
-        <input
-          type="text"
-          value={groceryItem}
-          onChange={(e) => setGroceryItem(e.target.value)}
-          required
-          style={inputStyle}
-        />
-        <button type="submit" style={buttonStyle}>Update</button>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Grocery Item:
+          <input
+            type="text"
+            value={groceryItem}
+            onChange={(e) => setGroceryItem(e.target.value)}
+          />
+        </label>
+        <label>
+          Grocery Type:
+          <input
+            type="text"
+            value={groceryType}
+            onChange={(e) => setGroceryType(e.target.value)}
+          />
+        </label>
+        <button type="submit">Update</button>
       </form>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <button onClick={handleDelete} style={deleteButtonStyle}>
-          Delete Item
-        </button>
-      </div>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
-};
+}
 
 export default Edit;
